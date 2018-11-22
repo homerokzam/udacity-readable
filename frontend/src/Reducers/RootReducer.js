@@ -24,15 +24,20 @@ function sortBy(dados, sorting) {
   return dados1.sort((a, b) => a[sorting] - b[sorting]);
 }
 
-function updateVote(posts, post) {
-  const index = posts.map(p => p.id).indexOf(post.id);
-  //console.log(index);
-  //console.log(posts[index]);
-  //console.log(post);
+// function updateVote(posts, post) {
+//   const index = posts.map(p => p.id).indexOf(post.id);
+//   posts[index] = {  ...posts[index], voteScore: post.voteScore };
+//   return posts;
+// }
 
-  //posts[index] = { ...posts[index] };
-  //posts[index].voteScore = post.voteScore;
-  posts[index] = {  ...posts[index], voteScore: post.voteScore };
-  //console.log(action.payload.data);
-  return posts;
+function updateVote(posts, post) {
+  return posts.map(p => {
+    if(p.id === post.id) {
+      p = {
+        ...p,
+        voteScore: post.voteScore
+      }
+    }
+    return p;
+  });
 }
