@@ -31,8 +31,8 @@ function updateVote(posts, post) {
   //console.log(post);
 
   //posts[index] = { ...posts[index] };
-  posts[index].voteScore = post.voteScore;
-
+  //posts[index].voteScore = post.voteScore;
+  posts[index] = {  ...posts[index], voteScore: post.voteScore };
   //console.log(action.payload.data);
   return posts;
 }
