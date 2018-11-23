@@ -31,5 +31,5 @@ class CommentList extends Component {
   }
 }
 
-const mapStateToProps = state => ({ categories: state.root.categories, posts: state.root.posts, comments: state.comment.comments })
+const mapStateToProps = state => ({ categories: state.categories.categories, posts: state.posts.posts, comments: state.comment.comments })
 export default connect(mapStateToProps)(CommentList);

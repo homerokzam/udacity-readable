@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
-import { sortPostsBy } from '../../Actions/RootActions';
+import { sortPostsBy } from '../Actions/PostActions';
 
 class SelectSorting extends React.Component {
   constructor() {
@@ -44,6 +44,6 @@ class SelectSorting extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ sorting: state.root.sorting });
+const mapStateToProps = state => ({ sorting: state.posts.sorting });
 const mapDispatchToProps = dispatch => bindActionCreators({ sortPostsBy }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(SelectSorting)

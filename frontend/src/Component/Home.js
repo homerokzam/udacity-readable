@@ -1,28 +1,20 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-import {
-  Grid,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Card,
-  Button
-} from '@material-ui/core';
+import { Grid, Typography, List, ListItem, ListItemText, ListItemIcon, Card, Button } from '@material-ui/core';
 import CategoryIcon from '@material-ui/icons/Category';
 import AddIcon from '@material-ui/icons/Add';
 
 import SelectSorting from './SelectSorting';
-import PostListitem from '../Posts/PostListItem';
+import PostList from './Post/PostList';
 
-import { getCategories, getPosts } from '../../Actions/RootActions';
+import { getCategories } from '../Actions/CategoryActions';
+import { getPosts } from '../Actions/PostActions';
 
-class Root extends Component {
-  constructor() {
-    super();
+class Home extends Component {
+  constructor(props) {
+    super(props);
 
     this.state = {
       selectedCategory: 'ALL'
@@ -42,12 +34,16 @@ class Root extends Component {
     }
   }
 
+  handleAddPost() {
+    this.props.history.push('newPost');
+  }
+
   render() {
     const { categories, posts } = this.props;
     const { selectedCategory } = this.state;
     const filteredPosts = posts.filter(p => selectedCategory === 'ALL' ? true : p.category === selectedCategory);
 
-    console.log('Root.render');
+    //console.log('Root.render');
     //console.log(posts);
 
     return(
@@ -79,7 +75,7 @@ class Root extends Component {
         </Grid>
 
         <Grid item xs={9} className="PostContainer">
-          <Button variant="fab" color="primary" aria-label="Add" className="AddButton" >
+          <Button variant="fab" color="primary" aria-label="Add" className="AddButton" onClick={() => this.handleAddPost()} >
             <AddIcon />
           </Button>
           <SelectSorting />
@@ -89,7 +85,7 @@ class Root extends Component {
           {filteredPosts && !!filteredPosts.length && (
             <List>
               {filteredPosts.map(p => (
-                <PostListitem post={p} key={p.id} />
+                <PostList post={p} key={p.id} />
               ))}
             </List>
           )}
@@ -100,11 +96,12 @@ class Root extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('Root.mapStateToProsp');
+  //console.log('Root.mapStateToProsp');
   //console.log(state.root.posts);
   //console.log(state.root.sorting);
 
-  return { categories: state.root.categories, posts: state.root.posts }
+  return { categories: state.categories.categories, posts: state.posts.posts }
 }
 const mapDispatchToProps = dispatch => bindActionCreators({ getCategories, getPosts }, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(Root)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

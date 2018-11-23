@@ -64,6 +64,6 @@ class CommentNew extends Component {
   }
 }
  
-const mapStateToProps = state => ({ posts: state.root.posts })
+const mapStateToProps = state => ({ posts: state.posts.posts })
 const mapDispatchToProps = dispatch => bindActionCreators({ addComment }, dispatch)
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentNew));

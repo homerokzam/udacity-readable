@@ -1,11 +1,15 @@
 import { combineReducers } from 'redux';
+import { reducer as toastrReducer } from 'react-redux-toastr';
 
-import RootReducer from './RootReducer';
+import PostReducer from './PostReducer';
+import CategoryReducer from './CategoryReducer';
 import CommentReducer from './CommentReducer';
 
 const rootReducer = combineReducers({
-  root: RootReducer,
-  comment: CommentReducer
+  posts: PostReducer,
+  categories: CategoryReducer,
+  comment: CommentReducer,
+  toastr: toastrReducer
 })
 
 export default rootReducer;
