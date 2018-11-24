@@ -1,4 +1,4 @@
-import { POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_DELETED } from '../Helpers/Const';
+import { POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_UPDATED, POST_DELETED } from '../Helpers/Const';
 
 const INITIAL_STATE = { categories: [], posts: [], sorting: 'timestamp' }
 
@@ -12,8 +12,15 @@ export default function(state = INITIAL_STATE, action) {
     case POST_VOTED:
       const postsVote = updateVote(state.posts, action.payload.data);
       return { ...state, posts: postsVote };
-    case POST_DELETED:
-      return state;     
+    case POST_UPDATED:
+      //const postsUpdated = updatePost(state.posts, action.payload.data);
+      //console.log('PostReducer.POST_UPDATED');
+      //console.log(action.payload.data);
+      //console.log(state.posts);
+      return { ...state };//, posts: postsUpdated };
+  case POST_DELETED:
+      console.log(action.payload);
+      return state;
     default:
       return state;
   }
@@ -36,6 +43,21 @@ function updateVote(posts, post) {
       p = {
         ...p,
         voteScore: post.voteScore
+      }
+    }
+    return p;
+  });
+}
+
+function updatePost(posts, post) {
+  return posts.map(p => {
+    if(p.id === post.id) {
+      p = {
+        ...p,
+        title: post.title,
+        body: post.body,
+        author: post.author,
+        category: post.category
       }
     }
     return p;

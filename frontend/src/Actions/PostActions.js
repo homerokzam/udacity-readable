@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import { BASE_URL, headers, POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_ADDED, POST_DELETED } from '../Helpers/Const';
+import { BASE_URL, headers, POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_ADDED, POST_UPDATED, POST_DELETED } from '../Helpers/Const';
 
 export async function getPosts() {
   const url = `${BASE_URL}/posts`;
@@ -41,11 +41,30 @@ export const addPost = async (post) => {
   }
 }
 
-export function deletePost(id) {
-  const url = `${BASE_URL}/posts/${id}`;
-  const request = axios.delete(url, { headers });
+export const updatePost = async (post) => {
+  //console.log('PostActions.updatePost');
+  //console.log(post);
+  const url = `${BASE_URL}/posts/${post.id}`;
+  const request = await axios.put(url, post, { headers });
+  toastr.success('Sucesso', 'Post atualizado com sucesso!');
+
   return {
-      type: POST_DELETED,
+      type: POST_UPDATED,
       payload: request
+  }
+}
+
+export const deletePost = (id) => {
+  return async dispatch => {
+    const url = `${BASE_URL}/posts/${id}`;
+    const request = await axios.delete(url, { headers });
+    toastr.success('Sucesso', 'Post excluído com sucesso!');
+    // return {
+    //     type: POST_DELETED,
+    //     payload: request
+    // }
+    dispatch([
+      getPosts()
+    ]);
   }
 }

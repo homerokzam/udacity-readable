@@ -108,7 +108,7 @@ class PostDetail extends Component {
     const { posts } = this.props;
     const { id: parentId } = this.props.match.params;
     const post = posts.find(p => p.id === parentId);
-    console.log(post);
+    //console.log(post);
 
     return (
       !post
