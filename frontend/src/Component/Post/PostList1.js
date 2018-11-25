@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter, Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,7 +11,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 
 import PostVote from './PostVote';
-//import FavoriteControl from '../FavoriteControl';
 import { deletePost } from '../../Actions/PostActions';
 
 const styles = theme => ({
@@ -69,6 +69,12 @@ class PostList1 extends Component {
     this.handleMenuClose();
   }
 
+  handleGoToDetail() {
+    //this.setState({ ...this.state, redirect: true });
+    const { post } = this.props;
+    this.props.history.push(`/posts/${post.id}`);
+  }
+
   render() {
     const { post, classes } = this.props;
     const { author, category, body, commentCount, id, timestamp, title, voteScore } = post;
@@ -112,9 +118,7 @@ class PostList1 extends Component {
               {/* <FavoriteControl
                 id={id}
               /> */}
-              <IconButton
-                aria-label="Comments"
-              >
+              <IconButton aria-label="Comments" onClick={() => this.handleGoToDetail()} >
                 <Comment />
               </IconButton>
               <Typography component="p">
@@ -130,4 +134,4 @@ class PostList1 extends Component {
 
 const mapStateToProps = state => ({ posts: state.posts.posts })
 const mapDispatchToProps = dispatch => bindActionCreators({ deletePost }, dispatch)
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PostList1));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(PostList1)));
