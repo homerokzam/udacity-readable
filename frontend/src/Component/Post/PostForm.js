@@ -22,13 +22,11 @@ const styles = theme => ({
   menu: {
     width: 200,
   },
-
 });
 
 class PostForm extends Component {
   constructor(props) {
     super(props);
-    
     this.state = this.getInitialState(this.props.post);
   }
 
@@ -45,13 +43,13 @@ class PostForm extends Component {
       body: '',
       author: '',
       category: '',
-    }
+    };
 
-    return state
+    return state;
   }
 
   componentWillReceiveProps = ({ post }) => {
-    this.setState(this.getInitialState(post))
+    this.setState(this.getInitialState(post));
   }
 
   handleChange = (name) => event => {
@@ -88,65 +86,23 @@ class PostForm extends Component {
 
     return (
       <ValidatorForm autoComplete="off" onSubmit={this.handleSubmit}>
-        <TextValidator
-          id="title"
-          label="Title"
-          multiline
-          rows="1"
-          fullWidth
-          value={title}
-          onChange={this.handleChange('title')}
-          margin="normal"
-          variant={variant}
-          name="title"
-          validators={['required']}
-          errorMessages={['This field is required']}
+        <TextValidator id="title" label="Title" multiline rows="1" fullWidth value={title} onChange={this.handleChange('title')}
+          margin="normal" variant={variant} name="title" validators={['required']} errorMessages={['Este campo é obrigatório']}
         />
-        <TextValidator
-          id="body"
-          label="Body"
-          multiline
-          rows="8"
-          fullWidth
-          value={body}
-          onChange={this.handleChange('body')}
-          margin="normal"
-          variant={variant}
-          name="body"
-          validators={['required']}
-          errorMessages={['This field is required']}
+        <TextValidator id="body" label="Body" multiline rows="8" fullWidth value={body} onChange={this.handleChange('body')}
+          margin="normal" variant={variant} name="body" validators={['required']} errorMessages={['Este campo é obrigatório']}
         />
-        <TextValidator
-          id="author"
-          label="Author"
-          multiline
-          rows="1"
-          fullWidth
-          value={author}
-          onChange={this.handleChange('author')}
-          margin="normal"
-          variant={variant}
-          name="author"
-          validators={['required']}
-          errorMessages={['This field is required']}
+        <TextValidator id="author" label="Author" multiline rows="1" fullWidth value={author} onChange={this.handleChange('author')}
+          margin="normal" variant={variant} name="author" validators={['required']} errorMessages={['Este campo é obrigatório']}
         />
-        <SelectValidator
-          id="select-category"
-          select
-          label="Select"
-          name="category"
-          fullWidth
-          value={category}
-          onChange={this.handleChange('category')}
-          validators={['required']}
-          errorMessages={['This field is required']}
+        <SelectValidator id="select-category" select label="Select" name="category" fullWidth value={category} onChange={this.handleChange('category')}
+          validators={['required']} errorMessages={['Este campo é obrigatório']}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
             },
           }}
-          margin="normal"
-          variant={variant}
+          margin="normal" variant={variant}
         >
           {categories.map(category => (
             <MenuItem key={category.path} value={category.path}>
@@ -169,4 +125,4 @@ class PostForm extends Component {
 }
 
 const mapStateToProps = state => ({ categories: state.categories.categories, posts: state.posts.posts });
-export default withStyles(styles)(connect(mapStateToProps)(withRouter(PostForm)))
+export default withStyles(styles)(connect(mapStateToProps)(withRouter(PostForm)));

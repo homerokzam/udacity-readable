@@ -1,14 +1,15 @@
 import { POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_UPDATED, POST_DELETED } from '../Helpers/Const';
 
-const INITIAL_STATE = { categories: [], posts: [], sorting: 'timestamp' }
+const INITIAL_STATE = { categories: [], posts: [], sorting: 'voteScore' }
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case POSTS_FETCHED:
-      return { ...state, posts: action.payload.data };
+      const posts = sortBy(action.payload.data, state.sorting);
+      return { ...state, posts: posts };
     case POSTS_SORT_BY:
-      const posts = sortBy(state.posts, action.payload);
-      return { ...state, posts: posts, sorting: action.payload }
+      const postsSorted = sortBy(state.posts, action.payload);
+      return { ...state, posts: postsSorted, sorting: action.payload }
     case POST_VOTED:
       const postsVote = updateVote(state.posts, action.payload.data);
       return { ...state, posts: postsVote };

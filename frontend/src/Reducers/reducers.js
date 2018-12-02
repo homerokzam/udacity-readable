@@ -8,7 +8,7 @@ import CommentReducer from './CommentReducer';
 const rootReducer = combineReducers({
   posts: PostReducer,
   categories: CategoryReducer,
-  comment: CommentReducer,
+  comments: CommentReducer,
   toastr: toastrReducer
 })
 

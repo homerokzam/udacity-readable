@@ -18,6 +18,7 @@ import PostDetail from './Component/Post/PostDetail';
 import Messages from './Helpers/Messages';
 import PostAdd from './Component/Post/PostAdd';
 import PostEdit from './Component/Post/PostEdit';
+import CommentEdit from './Component/Comment/CommentEdit';
 
 const history = createBrowserHistory();
 
@@ -96,6 +97,7 @@ class App extends Component {
               <Route path='/detail/:id' component={Detail} />
               <Route path='/newpost' component={PostAdd} />
               <Route path='/edit/:id' component={PostEdit} />
+              <Route path='/commentEdit/:id' component={CommentEdit} />
             </div>
           </BrowserRouter>
         </main>

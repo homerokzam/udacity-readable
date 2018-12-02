@@ -7,7 +7,7 @@ import CategoryIcon from '@material-ui/icons/Category';
 import AddIcon from '@material-ui/icons/Add';
 
 import SelectSorting from './SelectSorting';
-import PostList1 from './Post/PostList1';
+import PostList from './Post/PostList';
 
 import { getCategories } from '../Actions/CategoryActions';
 import { getPosts } from '../Actions/PostActions';
@@ -85,7 +85,7 @@ class Home extends Component {
           {filteredPosts && !!filteredPosts.length && (
             <List>
               {filteredPosts.map(p => (
-                <PostList1 post={p} key={p.id} />
+                <PostList post={p} key={p.id} />
               ))}
             </List>
           )}

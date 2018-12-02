@@ -94,7 +94,7 @@ class PostDetail extends Component {
     const post = posts.find(p => p.id === parentId);
 
     const alertConfirmation = window.confirm(
-      `Are you sure you want to delete the post ${post.title}?`
+      `Deseja excluir o post ${post.title}?`
     )
 
     if (alertConfirmation){
@@ -164,5 +164,5 @@ class PostDetail extends Component {
 }
 
 const mapStateToProps = state => ({ posts: state.posts.posts })
-const mapDispatchToProps = dispatch => bindActionCreators({ getComments }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ getComments, deletePost }, dispatch)
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PostDetail));

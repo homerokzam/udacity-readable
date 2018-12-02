@@ -25,6 +25,6 @@ class PostEdit extends Component {
   }
 }
  
-const mapStateToProps = state => ({ posts: state.posts.posts })
-const mapDispatchToProps = dispatch => bindActionCreators({ updatePost }, dispatch)
+const mapStateToProps = state => ({ posts: state.posts.posts });
+const mapDispatchToProps = dispatch => bindActionCreators({ updatePost }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(PostEdit);

@@ -1,4 +1,4 @@
-import { COMMENT_FETCHED, COMMENT_ADDED, COMMENT_VOTED } from '../Helpers/Const';
+import { COMMENT_FETCHED, COMMENT_ADDED, COMMENT_UPDATED } from '../Helpers/Const';
 
 const INITIAL_STATE = { comments: [] }
 
@@ -13,6 +13,8 @@ export default function(state = INITIAL_STATE, action) {
         //comments.push(action.payload.data);
 
         return { ...state, comments: [...state.comments, action.payload.data] };
+    case COMMENT_UPDATED:
+        return { ...state };
     default:
         return state;
   }
