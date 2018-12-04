@@ -14,6 +14,12 @@ export async function getPosts() {
   }
 }
 
+export async function getPost(id) {
+  const url = `${BASE_URL}/posts/${id}`;
+  const request = await axios.get(url, { headers });
+  return request.data;
+}
+
 export function sortPostsBy(sorting) {
   return({
     type: POSTS_SORT_BY,

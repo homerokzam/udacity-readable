@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 
@@ -19,6 +21,9 @@ import Messages from './Helpers/Messages';
 import PostAdd from './Component/Post/PostAdd';
 import PostEdit from './Component/Post/PostEdit';
 import CommentEdit from './Component/Comment/CommentEdit';
+
+import { getCategories } from './Actions/CategoryActions';
+import { getPosts } from './Actions/PostActions';
 
 const history = createBrowserHistory();
 
@@ -80,9 +85,15 @@ const styles = {
 };
 
 class App extends Component {
+  componentDidMount() {
+    this.props.getCategories();
+    this.props.getPosts();
+  }
+
   render() {
     //const { classes } = this.props;
     //console.log(classes);
+    const { categories } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -91,8 +102,16 @@ class App extends Component {
           <BrowserRouter >
             <div>
               <Route exact path='/' component={Home} />
-              {/* <Route path='/posts/:id' component={PostDetail} /> */}
-              <Route path='/posts/:id' render={(props) => (<PostDetail { ...props } />)} />
+              {categories &&
+                categories.map(category => (
+                  <React.Fragment>
+                    <Route key={`CAT${category.path}`} exact path={`/${category.name}`} render={ (props) => (<Home { ...props } category={category.path} />) } />
+                    <Route key={`POST${category.path}`} exact path={`/${category.name}/:id`} render={ (props) => (<PostDetail { ...props } />) } />
+                  </React.Fragment>
+                ))
+              }
+              <Route exact path='/ALL' render={ (props) => (<Home { ...props } category='ALL' />) } />
+              <Route path='/posts/:id' render={ (props) => (<PostDetail { ...props } />) } />
               <Route path='/category/:id' component={Category} />
               <Route path='/detail/:id' component={Detail} />
               <Route path='/newpost' component={PostAdd} />
@@ -107,4 +126,6 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles)(App);
+const mapStateToProps = state => ({ categories: state.categories.categories });
+const mapDispatchToProps = dispatch => bindActionCreators({ getCategories, getPosts }, dispatch);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App));

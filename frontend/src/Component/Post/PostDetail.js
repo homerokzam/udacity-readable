@@ -19,7 +19,7 @@ import CommentList from '../Comment/CommentList';
 import CommentNew from '../Comment/CommentNew';
 import NotFound from '../NotFound';
 import { getComments } from '../../Actions/CommentActions';
-import { deletePost } from '../../Actions/PostActions';
+import { deletePost, getPost } from '../../Actions/PostActions';
 
 const styles = theme => ({
   root: {
@@ -73,12 +73,23 @@ const styles = theme => ({
 class PostDetail extends Component {
   constructor(props) {
     super(props);
+
+    // this.state = {
+    //   post: null
+    // };
     this.handleBack = this.handleBack.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { id: parentId } = this.props.match.params;
+    console.log('PostDetail.componentDidMount');
+    console.log(parentId);
+
     this.props.getComments(parentId);
+
+    // var post = await getPost(parentId);
+    // console.log(post);
+    // this.setState({ post: post });
   }
 
   handleBack = () => {
@@ -108,6 +119,9 @@ class PostDetail extends Component {
     const { posts } = this.props;
     const { id: parentId } = this.props.match.params;
     const post = posts.find(p => p.id === parentId);
+    //var post = this.state.post;
+    //console.log('PostDetail.render');
+    //console.log(parentId);
     //console.log(post);
 
     return (

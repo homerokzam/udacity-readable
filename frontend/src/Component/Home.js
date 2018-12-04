@@ -22,16 +22,23 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.getCategories();
-    this.props.getPosts();
+    //this.props.getCategories();
+    //this.props.getPosts();
+
+    if (this.props.category)
+      this.setState({ ...this.state, selectedCategory: this.props.category });
   }
 
-  selectCategory(name) {
-    if (this.state.selectedCategory === name) {
-      this.setState({ ...this.state, selectedCategory: 'ALL' });
-    } else {
-      this.setState({ ...this.state, selectedCategory: name });
-    }
+  selectCategory(path) {
+    console.log('Home.selectCategory');
+    console.log(path);
+    console.log(this.props.history);
+    this.props.history.push(`/${path}`);
+    // if (this.state.selectedCategory === name) {
+    //   this.setState({ ...this.state, selectedCategory: 'ALL' });
+    // } else {
+    //   this.setState({ ...this.state, selectedCategory: name });
+    // }
   }
 
   handleAddPost() {
@@ -43,8 +50,10 @@ class Home extends Component {
     const { selectedCategory } = this.state;
     const filteredPosts = posts.filter(p => selectedCategory === 'ALL' ? true : p.category === selectedCategory);
 
-    //console.log('Root.render');
-    //console.log(posts);
+    //console.log('Home.render');
+    //console.log(categories);
+    if (categories.findIndex(item => item.name === 'ALL') === -1)
+      categories.push({ name: 'ALL', path: 'ALL' });
 
     return(
       <Grid container>
@@ -64,7 +73,7 @@ class Home extends Component {
 
             {categories &&
               categories.map(category => (
-                <ListItem key={category.name} button onClick={() => this.selectCategory(category.name)} className={ category.name === this.state.selectedCategory ? 'SelectedCategory' : ''} >
+                <ListItem key={category.name} button onClick={() => this.selectCategory(category.path)} className={ category.name === this.state.selectedCategory ? 'SelectedCategory' : ''} >
                   <ListItemText className="CategoryName">
                     {category.name}
                   </ListItemText>
@@ -103,5 +112,4 @@ const mapStateToProps = state => {
   return { categories: state.categories.categories, posts: state.posts.posts }
 }
 const mapDispatchToProps = dispatch => bindActionCreators({ getCategories, getPosts }, dispatch)
-
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
