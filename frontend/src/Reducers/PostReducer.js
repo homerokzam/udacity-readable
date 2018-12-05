@@ -19,7 +19,7 @@ export default function(state = INITIAL_STATE, action) {
       //console.log(action.payload.data);
       //console.log(state.posts);
       return { ...state };//, posts: postsUpdated };
-  case POST_DELETED:
+    case POST_DELETED:
       console.log(action.payload);
       return state;
     default:

@@ -17,12 +17,20 @@ export function getComments(parentId) {
 }
 
 export function addComment(data) {
-  const url = `${BASE_URL}/comments`;
-  //return axios.post(url, data, { headers });
-  const request = axios.post(url, data, { headers });
-  return {
-      type: COMMENT_ADDED,
-      payload: request
+  return async dispatch => {
+    const url = `${BASE_URL}/comments`;
+    //return axios.post(url, data, { headers });
+    const request = await axios.post(url, data, { headers });
+    toastr.success('Sucesso', 'Comment adicionado com sucesso!');
+
+    // return {
+    //     type: COMMENT_ADDED,
+    //     payload: request
+    // }
+
+    dispatch([
+      getComments(data.parentId)
+    ]);
   }
 }
 

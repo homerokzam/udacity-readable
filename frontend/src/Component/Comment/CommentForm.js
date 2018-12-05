@@ -9,26 +9,11 @@ import { withStyles } from '@material-ui/core/styles';
 import uuidv1 from 'uuid/v1';
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 
-const styles = theme => ({
-  submit: {
-    marginTop: theme.spacing.unit * 4,
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  menu: {
-    width: 200,
-  },
-});
-
 class CommentForm extends Component {
   constructor(props) {
     super(props);    
     this.state = this.getInitialState(this.props.comment);
-    console.log(this.state);
+    //console.log(this.state);
   }
 
   getInitialState(comment) {
@@ -94,6 +79,21 @@ class CommentForm extends Component {
     );
   }
 }
+
+const styles = theme => ({
+  submit: {
+    marginTop: theme.spacing.unit * 4,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  menu: {
+    width: 200,
+  },
+});
 
 const mapStateToProps = state => ({ posts: state.posts.posts, comments: state.comments.comments });
 export default withStyles(styles)(connect(mapStateToProps)(withRouter(CommentForm)));

@@ -30,9 +30,9 @@ class Home extends Component {
   }
 
   selectCategory(path) {
-    console.log('Home.selectCategory');
-    console.log(path);
-    console.log(this.props.history);
+    //console.log('Home.selectCategory');
+    //console.log(path);
+    //console.log(this.props.history);
     this.props.history.push(`/${path}`);
     // if (this.state.selectedCategory === name) {
     //   this.setState({ ...this.state, selectedCategory: 'ALL' });
@@ -53,7 +53,7 @@ class Home extends Component {
     //console.log('Home.render');
     //console.log(categories);
     if (categories.findIndex(item => item.name === 'ALL') === -1)
-      categories.push({ name: 'ALL', path: 'ALL' });
+      categories.push({ name: 'ALL', path: '' });
 
     return(
       <Grid container>

@@ -9,21 +9,6 @@ import { withStyles } from '@material-ui/core/styles';
 import uuidv1 from 'uuid/v1';
 import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 
-const styles = theme => ({
-  submit: {
-    marginTop: theme.spacing.unit * 4,
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  menu: {
-    width: 200,
-  },
-});
-
 class PostForm extends Component {
   constructor(props) {
     super(props);
@@ -84,6 +69,13 @@ class PostForm extends Component {
     const { title, body, author, category } = this.state;
     const { classes, variant, categories } = this.props;
 
+    const index = categories.findIndex(item => item.name === 'ALL');
+    //console.log(index);
+    if (index !== -1) {
+      categories.splice(index, 1);
+      //console.log(categories);
+    }
+
     return (
       <ValidatorForm autoComplete="off" onSubmit={this.handleSubmit}>
         <TextValidator id="title" label="Title" multiline rows="1" fullWidth value={title} onChange={this.handleChange('title')}
@@ -123,6 +115,21 @@ class PostForm extends Component {
     )
   }
 }
+
+const styles = theme => ({
+  submit: {
+    marginTop: theme.spacing.unit * 4,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  menu: {
+    width: 200,
+  },
+});
 
 const mapStateToProps = state => ({ categories: state.categories.categories, posts: state.posts.posts });
 export default withStyles(styles)(connect(mapStateToProps)(withRouter(PostForm)));

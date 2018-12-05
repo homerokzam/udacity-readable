@@ -20,12 +20,56 @@ import PostDetail from './Component/Post/PostDetail';
 import Messages from './Helpers/Messages';
 import PostAdd from './Component/Post/PostAdd';
 import PostEdit from './Component/Post/PostEdit';
+import CommentAdd from './Component/Comment/CommentAdd';
 import CommentEdit from './Component/Comment/CommentEdit';
 
 import { getCategories } from './Actions/CategoryActions';
 import { getPosts } from './Actions/PostActions';
 
 const history = createBrowserHistory();
+
+class App extends Component {
+  componentDidMount() {
+    this.props.getCategories();
+    this.props.getPosts();
+  }
+
+  render() {
+    //const { classes } = this.props;
+    //console.log(classes);
+    const { categories } = this.props;
+
+    return (
+      <MuiThemeProvider theme={theme}>
+        <Header />
+        <main>
+          <BrowserRouter >
+            <div>
+              <Route exact path='/' component={Home} />
+              {categories &&
+                categories.map(category => (
+                  <React.Fragment key={`F${category.path}`}>
+                    <Route key={`CAT${category.path}`} exact path={`/${category.name}`} render={ (props) => (<Home { ...props } category={category.path} />) } />
+                    <Route key={`POST${category.path}`} exact path={`/${category.name}/:id`} render={ (props) => (<PostDetail { ...props } />) } />
+                  </React.Fragment>
+                ))
+              }
+              <Route exact path='/ALL' render={ (props) => (<Home { ...props } category='ALL' />) } />
+              <Route path='/posts/:id' render={ (props) => (<PostDetail { ...props } />) } />
+              <Route path='/category/:id' component={Category} />
+              <Route path='/detail/:id' component={Detail} />
+              <Route path='/newpost' component={PostAdd} />
+              <Route path='/edit/:id' component={PostEdit} />
+              <Route path='/commentEdit/:id' component={CommentEdit} />
+              <Route path='/commentAdd/:id' component={CommentAdd} />
+            </div>
+          </BrowserRouter>
+        </main>
+        <Messages />
+      </MuiThemeProvider>
+    );
+  }
+}
 
 const theme = createMuiTheme({
   palette: {
@@ -83,48 +127,6 @@ const styles = {
   },
   toolbar: theme.mixins.toolbar,
 };
-
-class App extends Component {
-  componentDidMount() {
-    this.props.getCategories();
-    this.props.getPosts();
-  }
-
-  render() {
-    //const { classes } = this.props;
-    //console.log(classes);
-    const { categories } = this.props;
-
-    return (
-      <MuiThemeProvider theme={theme}>
-        <Header />
-        <main>
-          <BrowserRouter >
-            <div>
-              <Route exact path='/' component={Home} />
-              {categories &&
-                categories.map(category => (
-                  <React.Fragment>
-                    <Route key={`CAT${category.path}`} exact path={`/${category.name}`} render={ (props) => (<Home { ...props } category={category.path} />) } />
-                    <Route key={`POST${category.path}`} exact path={`/${category.name}/:id`} render={ (props) => (<PostDetail { ...props } />) } />
-                  </React.Fragment>
-                ))
-              }
-              <Route exact path='/ALL' render={ (props) => (<Home { ...props } category='ALL' />) } />
-              <Route path='/posts/:id' render={ (props) => (<PostDetail { ...props } />) } />
-              <Route path='/category/:id' component={Category} />
-              <Route path='/detail/:id' component={Detail} />
-              <Route path='/newpost' component={PostAdd} />
-              <Route path='/edit/:id' component={PostEdit} />
-              <Route path='/commentEdit/:id' component={CommentEdit} />
-            </div>
-          </BrowserRouter>
-        </main>
-        <Messages />
-      </MuiThemeProvider>
-    );
-  }
-}
 
 const mapStateToProps = state => ({ categories: state.categories.categories });
 const mapDispatchToProps = dispatch => bindActionCreators({ getCategories, getPosts }, dispatch);

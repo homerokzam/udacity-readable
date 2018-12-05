@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { TextField, FormControl, Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 import { v4 } from 'uuid';
 
@@ -44,11 +45,13 @@ class CommentNew extends Component {
 
     await this.setState({ ...this.state, id: id, timestamp: new Date().getTime() });
     this.props.addComment(this.state);
-    this.setState({ id: null, parentId: null, timestamp: null, body: '', author: '' });
+    //this.setState({ id: null, parentId: null, timestamp: null, body: '', author: '' });
+    this.props.history.goBack();
   }
 
   render() {
     //console.log(this.props.history);
+    const { classes } = this.props;
 
     return (
       <React.Fragment>
@@ -58,12 +61,35 @@ class CommentNew extends Component {
           <Button onClick={() => this.handleSave()} color="primary">
             Comment!
           </Button>
+          <div className={classes.submit}>
+            <Button variant="outlined" color="default" className={classes.button} onClick={() => {this.props.history.goBack()}}>
+              Back
+            </Button> 
+            <Button variant="contained" color="primary" type="submit" className={classes.button}>
+              Save
+            </Button>
+          </div>
         </FormControl>
       </React.Fragment>
     );
   }
 }
- 
+
+const styles = theme => ({
+  submit: {
+    marginTop: theme.spacing.unit * 4,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  menu: {
+    width: 200,
+  },
+});
+
 const mapStateToProps = state => ({ posts: state.posts.posts })
 const mapDispatchToProps = dispatch => bindActionCreators({ addComment }, dispatch)
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentNew));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentNew)));

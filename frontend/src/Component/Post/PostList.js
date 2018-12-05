@@ -10,34 +10,10 @@ import Comment from '@material-ui/icons/Comment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 
+import * as moment from 'moment';
+
 import PostVote from './PostVote';
 import { deletePost } from '../../Actions/PostActions';
-
-const styles = theme => ({
-  card: {
-    width: '100%',
-    maxWidth: 380,
-    margin: theme.spacing.unit * 2,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  link: {
-    ...theme.link,
-    outline: 0,
-  },
-  actions: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  actionIcon: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  footer: {
-    marginTop: 'auto',
-    paddingRight: theme.spacing.unit,
-  }
-});
 
 class PostList extends Component {
   constructor(props) {
@@ -81,7 +57,7 @@ class PostList extends Component {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
-    console.log(post);
+    //console.log(post);
 
     return (
       <Card className={`${classes.card} post`}>
@@ -100,7 +76,7 @@ class PostList extends Component {
               </IconButton>
             }
             title={title}
-            subheader={`by ${author} ${timestamp} ${category}`} />
+            subheader={`by ${author} ${moment(timestamp).format('LLL')} ${category}`} />
           <CardContent>
             <Typography component="p">
               {/* {`${body.substring(0,160)}...`} */}
@@ -131,6 +107,32 @@ class PostList extends Component {
     )
   }
 }
+
+const styles = theme => ({
+  card: {
+    width: '100%',
+    maxWidth: 380,
+    margin: theme.spacing.unit * 2,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  link: {
+    ...theme.link,
+    outline: 0,
+  },
+  actions: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  actionIcon: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  footer: {
+    marginTop: 'auto',
+    paddingRight: theme.spacing.unit,
+  }
+});
 
 const mapStateToProps = state => ({ posts: state.posts.posts })
 const mapDispatchToProps = dispatch => bindActionCreators({ deletePost }, dispatch)
