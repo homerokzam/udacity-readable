@@ -10,10 +10,12 @@ import { addComment } from '../../Actions/CommentActions';
 class CommentAdd extends Component {
 
   handleOnSubmit (comment) {
-    const { history, addComment } = this.props;
+    const { history, addComment, posts } = this.props;
+    const post = posts.find(p => p.id === comment.parentId);
+
     //console.log('CommentAdd.handleOnSubmit');
     //console.log(comment);
-    addComment(comment)
+    addComment(post, comment)
     history.goBack();//.push(`/posts/${comment.parentId}`);
   }
 
@@ -39,6 +41,6 @@ class CommentAdd extends Component {
   }
 }
 
-const mapStateToProps = state => ({ comments: state.comments.comments });
+const mapStateToProps = state => ({ posts: state.posts.posts, comments: state.comments.comments });
 const mapDispatchToProps = dispatch => bindActionCreators({ addComment }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(CommentAdd);

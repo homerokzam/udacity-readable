@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import { BASE_URL, headers, POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_ADDED, POST_UPDATED, POST_DELETED } from '../Helpers/Const';
+import { BASE_URL, headers, POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_UPDATE_COMMENTS } from '../Helpers/Const';
 
 export async function getPosts() {
   const url = `${BASE_URL}/posts`;
@@ -82,5 +82,14 @@ export const deletePost = (id) => {
     dispatch([
       getPosts()
     ]);
+  }
+}
+
+export const updateCommentCount = (post, isAdd) => {
+  //console.log('PostActions.updateCommentCount');
+  return {
+    type: POST_UPDATE_COMMENTS,
+    payload: post,
+    isAdd: isAdd
   }
 }

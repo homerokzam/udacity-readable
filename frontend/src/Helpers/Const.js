@@ -12,6 +12,7 @@ export const POST_VOTED = 'POST_VOTED';
 export const POST_ADDED = 'POST_ADDED';
 export const POST_UPDATED = 'POST_UPDATED';
 export const POST_DELETED = 'POST_DELETED';
+export const POST_UPDATE_COMMENTS = 'POST_UPDATE_COMMENTS';
 
 export const COMMENT_FETCHED = 'COMMENT_FETCHED';
 export const COMMENT_ADDED = 'COMMENT_ADDED';

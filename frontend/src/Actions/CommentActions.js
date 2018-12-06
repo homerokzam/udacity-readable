@@ -3,6 +3,8 @@ import { toastr } from 'react-redux-toastr';
 
 import { BASE_URL, COMMENT_FETCHED, COMMENT_ADDED, COMMENT_UPDATED } from '../Helpers/Const';
 
+import { updateCommentCount } from './PostActions';
+
 const headers = {
   Authorization: 'Teste'
 };
@@ -16,7 +18,7 @@ export function getComments(parentId) {
   }
 }
 
-export function addComment(data) {
+export function addComment(post, data) {
   return async dispatch => {
     const url = `${BASE_URL}/comments`;
     //return axios.post(url, data, { headers });
@@ -28,8 +30,11 @@ export function addComment(data) {
     //     payload: request
     // }
 
+    //console.log('CommentActions.addComment');
+
     dispatch([
-      getComments(data.parentId)
+      getComments(data.parentId),
+      updateCommentCount(post, true)
     ]);
   }
 }
@@ -47,7 +52,7 @@ export const updateComment = async (comment) => {
   }
 }
 
-export const deleteComment = (id, parentId) => {
+export const deleteComment = (post, id, parentId) => {
   return async dispatch => {
     const url = `${BASE_URL}/comments/${id}`;
     const request = await axios.delete(url, { headers });
@@ -57,7 +62,8 @@ export const deleteComment = (id, parentId) => {
     //     payload: request
     // }
     dispatch([
-      getComments(parentId)
+      getComments(parentId),
+      updateCommentCount(post, false)
     ]);
   }
 }

@@ -68,7 +68,9 @@ class CommentList extends Component {
     )
 
     if (alertConfirmation) {
-      this.props.deleteComment(comment.id, comment.parentId);
+      const { posts } = this.props;
+      const post = posts.find(p => p.id === comment.parentId);
+        this.props.deleteComment(post, comment.id, comment.parentId);
     }
   }
   

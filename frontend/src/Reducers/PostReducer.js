@@ -1,4 +1,4 @@
-import { POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_UPDATED, POST_DELETED } from '../Helpers/Const';
+import { POSTS_FETCHED, POSTS_SORT_BY, POST_VOTED, POST_UPDATED, POST_DELETED, POST_UPDATE_COMMENTS } from '../Helpers/Const';
 
 const INITIAL_STATE = { categories: [], posts: [], sorting: 'voteScore' }
 
@@ -20,8 +20,14 @@ export default function(state = INITIAL_STATE, action) {
       //console.log(state.posts);
       return { ...state };//, posts: postsUpdated };
     case POST_DELETED:
-      console.log(action.payload);
+      //console.log(action.payload);
       return state;
+    case POST_UPDATE_COMMENTS:
+      //console.log('PostReducer.POST_UPDATE_COMMENTS');
+      //console.log(action);
+      //console.log(action.isAdd);
+      const postsCommentCount = updateCommentCount(state.posts, action.payload, action.isAdd);
+      return { ...state, posts: postsCommentCount };
     default:
       return state;
   }
@@ -44,6 +50,22 @@ function updateVote(posts, post) {
       p = {
         ...p,
         voteScore: post.voteScore
+      }
+    }
+    return p;
+  });
+}
+
+function updateCommentCount(posts, post, isAdd) {
+  //console.log('PostReducer.updateCommentCount');
+  //console.log(posts);
+  //console.log(post);
+  //console.log(isAdd);
+  return posts.map(p => {
+    if(p.id === post.id) {
+      p = {
+        ...p,
+        commentCount: isAdd ? ++post.commentCount : --post.commentCount
       }
     }
     return p;
