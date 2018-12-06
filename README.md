@@ -15,8 +15,23 @@ Para rodar o projeto você deve ter o [npm](https://www.npmjs.com/) e as deppend
 
 Projeto rodando em Node e disponibilizado pela equipe da Udacity. Na raiz do projeto execute os seguinte comandos dentro do terminal:
 
-cd api-server
-node server.js
+* A partir do diretório root do projeto, navegar para o diretório do servidor
+
+```bash
+$ cd backend/api-server
+```
+
+* Atualizar o `npm`
+
+```bash
+$ npm install
+```
+
+* Executar o servidor Node
+
+```bash
+$ node server
+```
 
 ### Frontend
 
